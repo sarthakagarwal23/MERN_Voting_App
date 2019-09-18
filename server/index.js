@@ -7,13 +7,13 @@ const port = 4000;
 const host = 'localhost';
 
 app.use(bodyParser.json());
-app.all('/dishes',(req,res, next) =>{
+app.all('/',(req,res, next) =>{
      console.log(req.headers);
      res.statusCode = 200;
      res.setHeader('Content-Type','text/html');
      next();
 });
-app.get('/dishes',(req, res,next) =>{
+app.get('/',(req, res,next) =>{
  res.end("you are getting the right dish");
 });
 
