@@ -1,24 +1,19 @@
+require('dotenv').config();
 const express = require('express');
+const handle = require('./handlers/index');
+const db = require('./models/index');
 const app = express();
 const bodyParser = require('body-parser');
-const path = require('path');
+const cors = require('cors');
 const http = require('http');
-const port = 4000;
-const host = 'localhost';
+const port = process.env.PORT;
 
+app.use(cors());
 app.use(bodyParser.json());
-app.all('/',(req,res, next) =>{
-     console.log(req.headers);
-     res.statusCode = 200;
-     res.setHeader('Content-Type','text/html');
-     next();
-});
-app.get('/',(req, res,next) =>{
- res.end("you are getting the right dish");
-});
 
+app.get('/', (req , res) => res.json({hello:'world'}));
 
-const server = http.createServer(app);
-server.listen(port , host , () =>{
-    console.log(`server is listen to port http://${host}:${3000}`);
-})
+app.use(handle.notFound);
+app.use(handle.errors);
+
+app.listen(port , console.log(`server start at port ${port}`));
